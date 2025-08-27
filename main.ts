@@ -19,6 +19,7 @@ router
     const { aidItems } = data.get(fnr) ??
       data.get(defaultFnr) ?? { aidItems: [] };
     const since = context.request.url.searchParams.get("since");
+    context.response.headers.set("Access-Control-Allow-Origin", "*");
     context.response.body = {
       aidItems: since
         ? aidItems.filter(
