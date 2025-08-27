@@ -1,4 +1,4 @@
-export const utlån = new Map<string, any>();
+export const utlån = new Map<string, Record<string, unknown>>();
 
 export const defaultFnr = "01067434656";
 
