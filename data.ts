@@ -1,5 +1,8 @@
 export const utlån = new Map<string, any>();
-utlån.set("01067434656", {
+
+export const defaultFnr = "01067434656";
+
+utlån.set(defaultFnr, {
   hjelpemidler: [
     {
       antall: 1.0,

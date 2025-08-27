@@ -1,7 +1,7 @@
 import { Application } from "jsr:@oak/oak/application";
 import { Router } from "jsr:@oak/oak/router";
 
-import { utlån } from "./data.ts";
+import { defaultFnr, utlån } from "./data.ts";
 
 const router = new Router();
 router
@@ -15,8 +15,8 @@ router
     context.response.body = "ALIVE";
   })
   .post("/utlan", async (context) => {
-    const fnr = await context.request.body.text();
-    context.response.body = utlån.get(fnr);
+    const { fnr } = await context.request.body.json();
+    context.response.body = utlån.get(fnr) ?? utlån.get(defaultFnr);
   });
 
 const app = new Application();
