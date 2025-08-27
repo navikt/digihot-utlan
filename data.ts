@@ -1,6 +1,47 @@
-export const utlån = new Map<string, Record<string, unknown>>();
+type Nullable<T> = T | null;
 
-export const defaultFnr = "01067434656";
+export interface UtlåntHjelpemiddelV1 {
+  antall: number;
+  antallEnhet: string;
+  isoKode: string;
+  isoKategori: string;
+  beskrivelse: string;
+  hmsnr: string;
+  serieNr: Nullable<string>;
+  datoUtsendelse: string;
+  ordrenummer: Nullable<string>;
+  status: string;
+  grunndataBeriket: boolean;
+  grunndataProduktNavn: Nullable<string>;
+  grunndataBeskrivelse: Nullable<string>;
+  grunndataKategori: Nullable<string>;
+  grunndataBilde: Nullable<string>;
+  hjelpemiddeldatabasenURL: Nullable<string>;
+  grunndataKategoriKortnavn: Nullable<string>;
+}
+
+export interface UtlåntHjelpemiddelV2 {
+  hmsArtNr: string;
+  antall: number;
+  antallEnhet: "STK" | string;
+  serialNr: string;
+  status: string;
+
+  // FinnHjelpemiddel
+  title?: string; // fallbak til beskrivelse fra OeBS
+  articleName?: string;
+  isoCategory?: string;
+  isoCategoryTitle?: string;
+  productURL?: string;
+  imageURL?: string;
+}
+
+export const utlån = new Map<
+  string,
+  { hjelpemidler: UtlåntHjelpemiddelV1[] }
+>();
+
+export const defaultFnr = "20834797918";
 
 utlån.set(defaultFnr, {
   hjelpemidler: [
