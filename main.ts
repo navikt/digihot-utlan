@@ -1,7 +1,14 @@
 import { Application } from "jsr:@oak/oak/application";
 import { Router } from "jsr:@oak/oak/router";
 
-import { defaultFnr, utlån, UtlåntHjelpemiddelV2 } from "./data.ts";
+import { defaultFnr, data } from "./data.ts";
+
+function createRandomDate(yearsBack: number = 5): Date {
+  const now = new Date();
+  const pastTime =
+    now.getTime() - Math.random() * yearsBack * 365 * 24 * 60 * 60 * 1000;
+  return new Date(pastTime);
+}
 
 const router = new Router();
 router
@@ -15,28 +22,15 @@ router
     context.response.body = "ALIVE";
   })
   .post("/utlan", async (context) => {
+    const since = context.request.url.searchParams.get("since");
     const { fnr } = await context.request.body.json();
-    context.response.body = utlån.get(fnr) ?? utlån.get(defaultFnr);
-  })
-  .post("/utlan-v2", async (context) => {
-    const { fnr } = await context.request.body.json();
-    const { hjelpemidler } = utlån.get(fnr) ??
-      utlån.get(defaultFnr) ?? { hjelpemidler: [] };
+    const { aidItems } = data.get(fnr) ??
+      data.get(defaultFnr) ?? { aidItems: [] };
     context.response.body = {
-      hjelpemidler: hjelpemidler.map(
-        (it): UtlåntHjelpemiddelV2 => ({
-          hmsArtNr: it.hmsnr,
-          antall: it.antall,
-          antallEnhet: it.antallEnhet,
-          serialNr: it.serieNr,
-          status: it.status,
-          datoUtsendelse: it.datoUtsendelse,
-          articleName: it.grunndataProduktNavn ?? it.beskrivelse,
-          isoCategory: it.isoKode,
-          isoCategoryTitle: it.isoKategori,
-          productURL: it.hjelpemiddeldatabasenURL,
-          imageURL: it.grunndataBilde,
-        })
+      aidItems: aidItems.filter(
+        (it) =>
+          !since ||
+          new Date(it.updatedDate).getTime() >= new Date(since).getTime()
       ),
     };
   });
