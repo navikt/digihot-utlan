@@ -24,16 +24,13 @@ jobs:
       version_tag: ${{ steps.version-tag.outputs.VERSION_TAG}}
 
     steps:
-      - name: Sjekk ut koden
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Før deploy
-        uses: navikt/digihot-deploy/actions/pre-deploy@v3
+      - uses: navikt/digihot-deploy/actions/pre-deploy@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Bygg og push Docker image
-        uses: nais/docker-build-push@v0
+      - uses: nais/docker-build-push@v0
         id: docker-build-push
         with:
           team: teamdigihot
@@ -52,18 +49,10 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Sjekk ut koden
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Deploy
-        uses: nais/deploy/actions/deploy@v2
+      - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
           RESOURCE: .nais/dev.yaml
           IMAGE: ${{ needs.build.outputs.docker_image }}
-
-      - name: Etter deploy
-        if: github.ref == 'refs/heads/main'
-        uses: navikt/digihot-deploy/actions/post-deploy@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
