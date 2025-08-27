@@ -11,6 +11,12 @@ router
   .get("/", (context) => {
     context.response.body = "Hello, DigiHoT!";
   })
+  .get("/isready", (context) => {
+    context.response.body = "READY";
+  })
+  .get("/isalive", (context) => {
+    context.response.body = "ALIVE";
+  })
   .get("/utlan", (context) => {
     context.response.body = Array.from(utlån.values());
   })
