@@ -24,16 +24,16 @@ export interface UtlåntHjelpemiddelV2 {
   hmsArtNr: string;
   antall: number;
   antallEnhet: "STK" | string;
-  serialNr: string;
+  serialNr: Nullable<string>;
   status: string;
+  datoUtsendelse: string;
 
   // FinnHjelpemiddel
-  title?: string; // fallbak til beskrivelse fra OeBS
   articleName?: string;
   isoCategory?: string;
   isoCategoryTitle?: string;
-  productURL?: string;
-  imageURL?: string;
+  productURL?: Nullable<string>;
+  imageURL?: Nullable<string>;
 }
 
 export const utlån = new Map<
