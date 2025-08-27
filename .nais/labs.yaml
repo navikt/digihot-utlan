@@ -1,0 +1,33 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app: digihot-utlan
+    team: teamdigihot
+  name: digihot-utlan
+  namespace: teamdigihot
+spec:
+  image: {{image}}
+  port: 8000
+  ingresses:
+    - https://digihot-utlan.ekstern.dev.nav.no
+  liveness:
+    path: /isalive
+  readiness:
+    path: /isready
+  prometheus:
+    enabled: true
+    path: /metrics
+  replicas:
+    max: 1
+    min: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1024Mi
+    requests:
+      cpu: 10m
+      memory: 256Mi
+  env:
+    - name: PORT
+      value: "8000"
