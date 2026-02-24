@@ -6,7 +6,7 @@ import { defaultFnr, data } from "./data.ts";
 const router = new Router();
 router
   .get("/", (context) => {
-    context.response.body = "Hello, DigiHoT!";
+    context.response.body = "Hello, DigiHoT!!";
   })
   .get("/isready", (context) => {
     context.response.body = "READY";
