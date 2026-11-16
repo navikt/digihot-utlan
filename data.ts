@@ -29,7 +29,7 @@ data.set(defaultFnr, {
       quantityUnit: "STK",
       serialNr: null,
       status: "I data",
-      shipmentDate: "2024-06-25T13:24:12.000Z",
+      shipmentDate: "2024-06-25T13:25:12.000Z",
       updatedDate: "2022-05-24T14:28:10.974Z",
       articleName: "Radiomottaker BJ-232 1 rele",
       isoCategory: "241303",
